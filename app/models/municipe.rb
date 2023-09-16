@@ -8,6 +8,7 @@ class Municipe < ApplicationRecord
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
 
+  has_one_attached :foto
 
   def verify_cpf
     if cpf.present?
