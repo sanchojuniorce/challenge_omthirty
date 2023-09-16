@@ -15,9 +15,24 @@ class Municipe < ApplicationRecord
   end
   
   def verify_cns
-    if cpf.present?
-      errors.add(:base, 'Cns informado é inválido. Favor verificar e informar um cns válido') if cns.present?
+    if cns.present?
+      errors.add(:base, 'Cns informado é inválido. Favor verificar e informar um cns válido') if !validator_cns(cns)
     end  
   end
+
+  def validator_cns(cns)
+    begin
+      soma = cns[0].to_i*15 + cns[1].to_i*14 + cns[2].to_i*13 + cns[3].to_i*12 + cns[4].to_i*11 + cns[5].to_i*10 + cns[6].to_i*9 + cns[7].to_i*8 + cns[8].to_i*7 + cns[9].to_i*6 + cns[10].to_i*5 + cns[11].to_i*4 + cns[12].to_i*3 + cns[13].to_i*2 + cns[14].to_i*1
+      resto = soma % 11
+      if resto != 0
+        value = false
+      else
+        value = true  
+      end         
+    rescue 
+      value = false
+    end    
+    value
+  end  
 
 end
