@@ -5,7 +5,7 @@ class CreateMunicipes < ActiveRecord::Migration[7.0]
       t.string :cpf
       t.string :cns
       t.string :email
-      t.string :data_nascimento
+      t.date :data_nascimento
       t.string :telefone
       t.string :foto
       t.boolean :status
