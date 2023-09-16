@@ -45,6 +45,6 @@ class Municipe < ApplicationRecord
       errors.add(:base, 'Data de Nascimento informada é inválido. Favor verificar e informar uma data válida')
      end
     end  
-  end  
+  end 
 
 end
