@@ -1,14 +1,66 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Municipes</h1>
+<h2>Lista de Municipios</h2>
 
-<div id="municipes">
-  <% @municipes.each do |municipe| %>
-    <%= render municipe %>
-    <p>
-      <%= link_to "Show this municipe", municipe %>
-    </p>
-  <% end %>
+<div class="card card-default">
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <div>
+      </div>
+      <div>
+        <%= link_to 'Novo', new_municipe_path, class:'btn btn-success', type:"button" %>
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">CPF</th>
+          <th scope="col">CNS</th>
+          <th scope="col">Email</th>
+          <th scope="col">Dat. Nasc.</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Foto</th>
+          <th scope="col">Status</th>
+          <th colspan="3">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @municipes.each do |municipe| %>
+          <tr>
+            <th scope="row"><%= municipe.id %></th>
+            <th><%= municipe.nome %></th>
+            <td><%= municipe.cpf %></td>
+            <td><%= municipe.cns %></td>
+            <td><%= municipe.email %></td>
+            <td><%= municipe.data_nascimento %></td>
+            <td><%= municipe.telefone %></td>
+            <td>
+              <% if municipe.foto.attached? %>
+                <%= image_tag url_for(municipe.foto), width: "200px" %>
+              <% end %>  
+            </td>
+            <td><%= municipe.status ? "Ativo" : "Inativo" %></td>
+            <!--<td>
+              <%#= link_to atendimento do %>
+                <%#= fa_icon "eye" %>
+              <%# end %>
+            </td>
+            <td>
+              <%#= link_to edit_atendimento_path(atendimento)  do %>
+                <%#= fa_icon "edit" %>
+              <%# end %>
+            </td>
+            <td>
+              <%#= link_to atendimento, method: :delete, data: { confirm: 'Você tem certeza disso?' } do %>
+                <i class="fa fa-trash"></i>
+              <%# end %>
+            </td>!-->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<%= link_to "New municipe", new_municipe_path %>
