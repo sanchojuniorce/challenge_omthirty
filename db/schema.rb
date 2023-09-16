@@ -10,8 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_16_033622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "enderecos", force: :cascade do |t|
+    t.string "cep"
+    t.string "logradouro"
+    t.string "complemento"
+    t.string "bairro"
+    t.string "cidade"
+    t.string "uf"
+    t.string "codigo_ibge"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "municipes", force: :cascade do |t|
+    t.string "nome"
+    t.string "cpf"
+    t.string "cns"
+    t.string "email"
+    t.string "data_nascimento"
+    t.string "telefone"
+    t.string "foto"
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
