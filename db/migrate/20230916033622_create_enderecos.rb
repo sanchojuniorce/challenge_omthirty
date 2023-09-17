@@ -8,6 +8,7 @@ class CreateEnderecos < ActiveRecord::Migration[7.0]
       t.string :cidade
       t.string :uf
       t.string :codigo_ibge
+      t.references :municipe, foreign_key: true
 
       t.timestamps
     end

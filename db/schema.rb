@@ -50,8 +50,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_072952) do
     t.string "cidade"
     t.string "uf"
     t.string "codigo_ibge"
+    t.bigint "municipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["municipe_id"], name: "index_enderecos_on_municipe_id"
   end
 
   create_table "municipes", force: :cascade do |t|
@@ -59,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_072952) do
     t.string "cpf"
     t.string "cns"
     t.string "email"
-    t.string "data_nascimento"
+    t.date "data_nascimento"
     t.string "telefone"
     t.string "foto"
     t.boolean "status"
@@ -69,4 +71,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_072952) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "enderecos", "municipes"
 end

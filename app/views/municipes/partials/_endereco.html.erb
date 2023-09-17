@@ -1,0 +1,97 @@
+
+<div class="card card-default">
+  <div class="card-header">
+    <h3 class="card-title">Endereço</h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-12 col-md-4">
+              <%= form.label :cep %>
+              <% value_cep = @endereco.cep rescue "" %>
+              <%= form.text_field :cep, class:"form-control", required: required, placeholder:"Preencha o cep", name: "endereco[cep]", value: value_cep %>
+              <%= errors_for(form, :cep) %>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <%= form.label :logradouro %>
+              <% value_logradouro = @endereco.logradouro rescue "" %>
+              <%= form.text_field :logradouro, class:"form-control",required: required,  placeholder:"Preencha o logradouro", readonly: readonly, name: "endereco[logradouro]", value: value_logradouro %>
+              <%= errors_for(form, :logradouro) %>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <%= form.label :complemento %>
+              <% value_complemento = @endereco.complemento rescue "" %>
+              <%= form.text_field :complemento, class:"form-control",  placeholder:"Preencha o complemento", name: "endereco[complemento]", value: value_complemento %>
+              <%= errors_for(form, :complemento) %>
+            </div>  
+          </div>
+          <div class="row">    
+            <div class="col-xs-12 col-md-4">
+              <%= form.label :bairro %>
+              <% value_bairro = @endereco.bairro rescue "" %>
+              <%= form.text_field :bairro, class:"form-control",required: required,  placeholder:"Preencha o bairro", readonly: readonly, name: "endereco[bairro]", value: value_bairro %>
+              <%= errors_for(form, :bairro) %>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <%= form.label :cidade %>
+              <% value_cidade = @endereco.cidade rescue "" %>
+              <%= form.text_field :cidade, class:"form-control",required: required,  placeholder:"Preencha a cidade", readonly: readonly, name: "endereco[cidade]", value: value_cidade %>
+              <%= errors_for(form, :cidade) %>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <%= form.label :uf %>
+              <% value_uf = @endereco.uf rescue "" %>
+              <%= form.text_field :uf, class:"form-control",required: required,  placeholder:"Preencha a uf", readonly: readonly, name: "endereco[uf]", value: value_uf %>
+              <%= errors_for(form, :uf) %>
+            </div>
+          </div>
+          <div class="row">    
+            <div class="col-xs-12 col-md-4 form-switch">
+              <%= form.label :codigo_ibge %><br>
+              <% value_codigo_ibge = @endereco.codigo_ibge rescue "" %>
+              <%= form.text_field :codigo_ibge, class:"form-control",  placeholder:"Preencha o código IBGE", readonly: readonly, name: "endereco[codigo_ibge]", value: value_codigo_ibge %>
+              <%= errors_for(form, :codigo_ibge) %>
+            </div>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <%= link_to 'Voltar', municipes_path, class:'btn btn-success', type:"button" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<script>
+(function(){ 
+ 
+    const cep = document.querySelector("input[name='endereco[cep]']");
+ 
+    cep.addEventListener('blur', e=> {
+         const value = cep.value.replace(/[^0-9]+/, '');
+         const url = `https://viacep.com.br/ws/${value}/json/`;
+ 
+       fetch(url)
+      .then( response => response.json())
+      .then( json => {
+                 
+          if( json.logradouro ) {
+            document.querySelector("input[name='endereco[logradouro]']").value = json.logradouro;
+            document.querySelector("input[name='endereco[bairro]']").value = json.bairro;
+            document.querySelector("input[name='endereco[cidade]']").value = json.localidade;
+            document.querySelector("input[name='endereco[uf]']").value = json.uf;
+            document.querySelector("input[name='endereco[codigo_ibge]']").value = json.ibge;
+          }
+         
+       
+      });
+   });
+ 
+ })();
+</script>

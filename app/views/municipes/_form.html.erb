@@ -1,61 +1,6 @@
 <%= form_with(model: municipe, html: { data: { controller: "masks" } }) do |form| %>
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
-    <%= errors_for(form, :nome) %>
-  </div>
+  <%= render "/municipes/partials/municipe", form: form, required: false %>
+  <%= render "/municipes/partials/endereco", form: form, required: true, readonly: true %>
+<% end %>  
 
-  <div>
-    <%= form.label :cpf, style: "display: block" %>
-    <%= form.text_field :cpf %>
-    <%= errors_for(form, :cpf) %>
-  </div>
-
-  <div>
-    <%= form.label :cns, style: "display: block" %>
-    <%= form.text_field :cns %>
-    <%= errors_for(form, :cns) %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-    <%= errors_for(form, :email) %>
-  </div>
-
-  <div>
-    <%= form.label :data_nascimento, style: "display: block" %>
-    <%= form.text_field :data_nascimento %>
-    <%= errors_for(form, :data_nascimento) %>
-  </div>
-
-  <div>
-    <%= form.label :telefone, style: "display: block" %>
-    <%= form.text_field :telefone %>
-    <%= errors_for(form, :telefone) %>
-  </div>
-
-  <div>
-    <%= form.label :foto, style: "display: block" %>
-    <%= form.file_field :foto %>
-    <%= errors_for(form, :foto) %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.check_box :status %>
-    <%= errors_for(form, :status) %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<script>
-  $(document).ready(function () { 
-    $("#municipe_cpf").mask('000.000.000-00', {reverse: true});
-    $("#municipe_data_nascimento").mask('00/00/0000', {reverse: true});
-    $("#municipe_telefone").mask('+55 (00) 00000-0000', {reverse: true});
-  });
-</script>
+            

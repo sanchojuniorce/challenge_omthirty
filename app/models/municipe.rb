@@ -4,7 +4,7 @@ class Municipe < ApplicationRecord
 
   validate :verify_cpf
   validate :verify_cns
-  validate :verify_date
+  #validate :verify_date
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
 
