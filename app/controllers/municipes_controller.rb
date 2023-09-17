@@ -3,7 +3,7 @@ class MunicipesController < ApplicationController
 
   # GET /municipes or /municipes.json
   def index
-    @municipes = Municipe.all
+    @municipes = Municipe.paginate(page: params[:page], per_page: 20).order("id desc")
   end
 
   # GET /municipes/1 or /municipes/1.json
@@ -22,12 +22,12 @@ class MunicipesController < ApplicationController
   # POST /municipes or /municipes.json
   def create
     @municipe = Municipe.new(municipe_params)
-    @endereco = Endereco.new(endereco_params)
 
     respond_to do |format|
       if (params.keys.include?("municipe")) or (params.keys.include?("endereco")) and @municipe.save
+        params[:endereco][:municipe_id] = @municipe.id
+        @endereco = Endereco.new(endereco_params)
         if (params.keys.include?("endereco"))
-          params[:endereco][:municipe_id] = @municipe.id
           @endereco.save
         end
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio registrado com sucesso." }
@@ -42,6 +42,7 @@ class MunicipesController < ApplicationController
   # PATCH/PUT /municipes/1 or /municipes/1.json
   def update
     @endereco = Endereco.find_by_municipe_id(@municipe.id)
+    params[:endereco][:municipe_id] = @municipe.id
 
     respond_to do |format|
       if @municipe.update(municipe_params)
@@ -51,7 +52,6 @@ class MunicipesController < ApplicationController
             notice = 'Endereço atualizado com sucesso.'
           else
             @endereco = Endereco.new(endereco_params)
-            params[:endereco][:municipe_id] = @municipe.id
             @endereco.save
             notice = 'Endereço salvo com sucesso.'
           end
