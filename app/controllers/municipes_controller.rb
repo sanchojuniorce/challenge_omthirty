@@ -1,5 +1,5 @@
 class MunicipesController < ApplicationController
-  before_action :set_municipe, only: %i[ show edit update destroy ]
+  before_action :set_municipe, only: %i[ show edit update ]
 
   # GET /municipes or /municipes.json
   def index
@@ -25,14 +25,12 @@ class MunicipesController < ApplicationController
     @endereco = Endereco.new(endereco_params)
 
     respond_to do |format|
-      if (params.keys.include?("municipe")) or (params.keys.include?("endereco"))
-        if @municipe.save
-          if (params.keys.include?("endereco"))
-            params[:endereco][:municipe_id] = @municipe.id
-            @endereco.save
-          end
-        end  
-        format.html { redirect_to municipe_url(@municipe), notice: "Municipe was successfully created." }
+      if (params.keys.include?("municipe")) or (params.keys.include?("endereco")) and @municipe.save
+        if (params.keys.include?("endereco"))
+          params[:endereco][:municipe_id] = @municipe.id
+          @endereco.save
+        end
+        format.html { redirect_to municipe_url(@municipe), notice: "Municipio registrado com sucesso." }
         format.json { render :show, status: :created, location: @municipe }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,7 +56,7 @@ class MunicipesController < ApplicationController
             notice = 'Endereço salvo com sucesso.'
           end
         end
-        format.html { redirect_to municipe_url(@municipe), notice: "Municipe was successfully updated." }
+        format.html { redirect_to municipe_url(@municipe), notice: "Municipio atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @municipe }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -67,15 +65,6 @@ class MunicipesController < ApplicationController
     end
   end
 
-  # DELETE /municipes/1 or /municipes/1.json
-  def destroy
-    @municipe.destroy
-
-    respond_to do |format|
-      format.html { redirect_to municipes_url, notice: "Municipe was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

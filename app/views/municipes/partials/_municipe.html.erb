@@ -11,46 +11,50 @@
           <div class="row">
             <div class="col-xs-12 col-md-4">
               <%= form.label :nome %>
-              <%= form.text_field :nome, class:"form-control", required: required, placeholder:"Preencha o nome" %>
+              <%= form.text_field :nome, class:"form-control", required: required, placeholder:"Preencha o nome", disabled: disabled %>
               <%= errors_for(form, :nome) %>
             </div>
             <div class="col-xs-12 col-md-4">
               <%= form.label :cpf %>
-              <%= form.text_field :cpf, class:"form-control",required: required,  placeholder:"Preencha o cpf" %>
+              <%= form.text_field :cpf, class:"form-control",required: required,  placeholder:"Preencha o cpf", disabled: disabled %>
               <%= errors_for(form, :cpf) %>
             </div>
             <div class="col-xs-12 col-md-4">
               <%= form.label :cns %>
-              <%= form.text_field :cns, class:"form-control",required: required,  placeholder:"Preencha o cns" %>
+              <%= form.text_field :cns, class:"form-control",required: required,  placeholder:"Preencha o cns", disabled: disabled %>
               <%= errors_for(form, :cns) %>
             </div>  
           </div>
           <div class="row">    
             <div class="col-xs-12 col-md-4">
               <%= form.label :email %>
-              <%= form.text_field :email, class:"form-control",required: required,  placeholder:"Preencha o email" %>
+              <%= form.text_field :email, class:"form-control",required: required,  placeholder:"Preencha o email", disabled: disabled %>
               <%= errors_for(form, :email) %>
             </div>
             <div class="col-xs-12 col-md-4">
               <%= form.label :data_nascimento %>
-              <%= form.date_field :data_nascimento, class:"form-control", required: required %>
+              <%= form.date_field :data_nascimento, class:"form-control", required: required, disabled: disabled %>
               <%= errors_for(form, :data_nascimento) %>
             </div>
             <div class="col-xs-12 col-md-4">
               <%= form.label :telefone %>
-              <%= form.text_field :telefone, class:"form-control",required: required,  placeholder:"Preencha a data de telefone" %>
+              <%= form.text_field :telefone, class:"form-control",required: required,  placeholder:"Preencha a data de telefone", disabled: disabled %>
               <%= errors_for(form, :telefone) %>
             </div>
           </div>
           <div class="row">    
             <div class="col-xs-12 col-md-4">
               <%= form.label :foto %>
-              <%= form.file_field :foto, class:"form-control",required: required %>
+              <% if params[:action] == 'show' and @municipe.foto.attached? %>
+                <%= image_tag url_for(@municipe.foto), style: 'height:120px;width:120px;' %>
+              <% else %>
+                <%= form.file_field :foto, class:"form-control",required: required, disabled: disabled %>
+              <% end %>
               <%= errors_for(form, :foto) %>
             </div>
             <div class="col-xs-12 col-md-4 form-switch">
               <%= form.label :status %><br>
-              <%= form.check_box :status, class:"form-control", 'data-toggle': "toggle", 'data-size': "sm", checked: true, required: required %>
+              <%= form.check_box :status, class:"form-control", 'data-toggle': "toggle", 'data-size': "sm", checked: true, required: required, disabled: disabled %>
               <%= errors_for(form, :status) %>
             </div>
           </div>

@@ -1,10 +1,12 @@
-<p style="color: green"><%= notice %></p>
+<% if notice.present? %>
+  <div class="alert alert-success" role="alert">
+    <%= notice %>
+  </div>
+<% end %>
 
-<%= render @municipe %>
+<%= form_with(model: @municipe, html: { data: { controller: "masks" } }) do |form| %>
+  <%= render "/municipes/partials/municipe", form: form, required: false, disabled: true %>
+  <%= render "/municipes/partials/endereco", form: form, required: true, readonly: true, disabled: true %>
+<% end %>  
 
-<div>
-  <%= link_to "Edit this municipe", edit_municipe_path(@municipe) %> |
-  <%= link_to "Back to municipes", municipes_path %>
-
-  <%= button_to "Destroy this municipe", @municipe, method: :delete %>
-</div>
+            
