@@ -4,7 +4,7 @@ class Municipe < ApplicationRecord
 
   validate :verify_cpf
   validate :verify_cns
-  #validate :verify_date
+  validate :verify_date
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
 
@@ -40,7 +40,7 @@ class Municipe < ApplicationRecord
   def verify_date
     if data_nascimento.present?
      begin
-      Date.parse(data_nascimento)
+      Date.parse("'#{data_nascimento}'")
      rescue ArgumentError
       errors.add(:base, 'Data de Nascimento informada é inválido. Favor verificar e informar uma data válida')
      end
