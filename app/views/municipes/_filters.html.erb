@@ -1,0 +1,55 @@
+<div class="card card-default">
+  <div class="card-header">
+    <h3 class="card-title">Consulta</h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= form_for('/municipe/index', method: :get) do |form| %>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <%= form.label :nome %>
+                  <% value_nome = params["/municipe/index"][:nome] rescue '' %>
+                  <%= form.text_field :nome, class:"form-control", placeholder:"Informe o nome do Municipe", value: value_nome %>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <%= form.label :cpf, "Cpf" %>
+                  <% value_cpf = params["/municipe/index"][:cpf] rescue '' %>
+                  <%= form.text_field :cpf, class:"form-control",  placeholder:"Informe o cpf", value: value_cpf %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <%= form.label :cep %>
+                  <% value_cep = params["/municipe/index"][:cep] rescue '' %>
+                  <%= form.text_field :cep, class:"form-control", placeholder:"Informe o cep", value: value_cep %>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <%= form.label :codigo_ibge %>
+                  <% value_codigo_ibge = params["/municipe/index"][:codigo_ibge] rescue '' %>
+                  <%= form.text_field :cpf, class:"form-control",  placeholder:"Informe o codigo_ibge", value: value_codigo_ibge %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Consultar</button>
+              <%= link_to 'Limpar', municipes_path, class:'btn btn-success', type:"button" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+

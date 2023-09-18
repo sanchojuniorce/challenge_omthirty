@@ -1,3 +1,5 @@
+<%= render "municipes/filters" %>
+
 <% if notice.present? %>
   <div class="alert alert-success" role="alert">
     <%= notice %>
@@ -22,9 +24,6 @@
           <th scope="col">Nome</th>
           <th scope="col">CPF</th>
           <th scope="col">CNS</th>
-          <th scope="col">Email</th>
-          <th scope="col">Dat. Nasc.</th>
-          <th scope="col">Telefone</th>
           <th scope="col">Foto</th>
           <th scope="col">Status</th>
           <th scope="col" colspan="3">Ações</th>
@@ -37,9 +36,6 @@
             <th><%= municipe.nome %></th>
             <td><%= municipe.cpf %></td>
             <td><%= municipe.cns %></td>
-            <td><%= municipe.email %></td>
-            <td><%= municipe.data_nascimento %></td>
-            <td><%= municipe.telefone %></td>
             <td>
               <% if municipe.foto.attached? %>
                 <%= image_tag url_for(municipe.foto), style: 'height:20px;width:120px;' %>

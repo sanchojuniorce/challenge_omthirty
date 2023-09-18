@@ -7,6 +7,7 @@ class Municipe < ApplicationRecord
   validate :verify_date
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
+  has_one :endereco
 
   has_one_attached :foto
 

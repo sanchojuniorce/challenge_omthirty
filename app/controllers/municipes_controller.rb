@@ -3,8 +3,18 @@ class MunicipesController < ApplicationController
 
   # GET /municipes or /municipes.json
   def index
-    @municipes = Municipe.paginate(page: params[:page], per_page: 20).order("id desc")
+    @result = params["/municipe/index"].present? ? query_string(params["/municipe/index"]) : ''
+    @municipes = Municipe.joins(:endereco).where(@result).paginate(page: params[:page], per_page: 20).order("id desc")
   end
+
+  def query_string(params)
+    result = []
+    result << "nome ilike '%#{params[:nome]}%'" if params[:nome].present?
+    result << "cpf ilike '%#{params[:cpf]}%'" if params[:cpf].present?
+    result << "enderecos.cep ilike '%#{params[:cep]}%'" if params[:cep].present?
+    result << "enderecos.codigo_ibge ilike '%#{params[:codigo_ibge]}%'" if params[:codigo_ibge].present?
+    result = result.join(" AND ")
+  end  
 
   # GET /municipes/1 or /municipes/1.json
   def show
