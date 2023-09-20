@@ -3,6 +3,7 @@ class MunicipesController < ApplicationController
 
   # GET /municipes or /municipes.json
   def index
+    UserMailer.body_register_municipe('sanchorodrigues@yahoo.com.br').deliver
     @result = params["/municipe/index"].present? ? query_string(params["/municipe/index"]) : ''
     @municipes = Municipe.joins(:endereco).where(@result).paginate(page: params[:page], per_page: 20).order("id desc")
   end
@@ -40,6 +41,7 @@ class MunicipesController < ApplicationController
         if (params.keys.include?("endereco"))
           @endereco.save
         end
+        # UserMailer.body_register_municipe(@municipe.email).deliver
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio registrado com sucesso." }
         format.json { render :show, status: :created, location: @municipe }
       else
