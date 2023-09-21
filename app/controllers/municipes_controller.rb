@@ -41,7 +41,7 @@ class MunicipesController < ApplicationController
           @endereco.save
         end
         UserMailer.body_register_municipe(@municipe.email).deliver
-        #UserMailer.body_register_municipe('sanchorodrigues@yahoo.com.br').deliver
+        send_sms(@municipe.phone)
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio registrado com sucesso." }
         format.json { render :show, status: :created, location: @municipe }
       else
@@ -69,6 +69,7 @@ class MunicipesController < ApplicationController
           end
         end
         UserMailer.body_register_municipe(@municipe.email).deliver
+        send_sms(@municipe.phone)
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @municipe }
       else
@@ -98,4 +99,19 @@ class MunicipesController < ApplicationController
     def endereco_params
       params.require(:endereco).permit(:cep, :logradouro, :complemento, :bairro, :cidade, :uf, :codigo_ibge, :municipe_id)
     end
+
+    def sms_authenticate
+      client = Vonage::Client.new(
+        api_key: ENV['API_KEY'],
+        api_secret: ENV['API_SECRET']
+      )
+    end  
+
+    def send_sms(phone)
+      sms_authenticate.sms.send(
+        from: "Municipes System",
+        to: phone,
+        text: 'Municipes System - Messagem SMS Free Developer '
+      )
+    end  
 end

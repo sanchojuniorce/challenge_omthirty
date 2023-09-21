@@ -48,6 +48,8 @@ gem "font-awesome-sass", "~> 6.4.2"
 gem 'will_paginate', '~> 4.0'
 gem "letter_opener"
 gem 'sendgrid-ruby'
+gem 'vonage'
+gem 'dotenv-rails'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
