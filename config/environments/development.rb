@@ -73,11 +73,11 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true  
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => '89984ef425e21f',
-    :password => 'ca1f6f5f045400',
-    :address => 'sandbox.smtp.mailtrap.io',
-    :host => 'sandbox.smtp.mailtrap.io',
-    :port => '2525',
+    :user_name => ENV['MAITRAP_USER_NAME'],
+    :password => ENV['MAITRAP_PASSWORD'],
+    :address => ENV['MAITRAP_ADDRESS'],
+    :host => ENV['MAITRAP_HOST'],
+    :port => ENV['MAITRAP_PORT'],
     :authentication => :cram_md5
   }
 end
