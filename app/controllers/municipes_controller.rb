@@ -31,6 +31,8 @@ class MunicipesController < ApplicationController
 
   # POST /municipes or /municipes.json
   def create
+    params[:municipe][:cpf] = params[:municipe][:cpf].gsub(/[.\/-]/, '')
+    params[:municipe][:telefone] = params[:municipe][:telefone].gsub!(/[^0-9A-Za-z]/, '')
     @municipe = Municipe.new(municipe_params)
 
     respond_to do |format|
@@ -56,6 +58,8 @@ class MunicipesController < ApplicationController
   def update
     @endereco = Endereco.find_by_municipe_id(@municipe.id)
     params[:endereco][:municipe_id] = @municipe.id
+    params[:municipe][:cpf] = params[:municipe][:cpf].gsub(/[.\/-]/, '')
+    params[:municipe][:telefone] = params[:municipe][:telefone].gsub!(/[^0-9A-Za-z]/, '')
 
     respond_to do |format|
       if @municipe.update(municipe_params)
@@ -71,7 +75,7 @@ class MunicipesController < ApplicationController
         end
         @body_email = [@municipe, 'Atualização']
         UserMailer.body_register_municipe(@body_email).deliver
-        send_sms(@municipe, 'a', 'a atualização')
+        #send_sms(@municipe, 'a', 'a atualização')
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @municipe }
       else
@@ -123,4 +127,12 @@ class MunicipesController < ApplicationController
       msg << "CPF: #{municipe.cpf}, CNS: #{municipe.cns}, Telefone: #{municipe.telefone} e Status: #{municipe.status ? "Ativo" : "Inativo"} no dia "
       msg << "#{municipe.created_at.strftime("%d/%m/%Y")} ás #{municipe.created_at.strftime("%H:%M:%S")}"
     end  
+
+    # def sanitizer_params(params)
+    #   if params.present? 
+    #     cpf = params[:municipe][:cpf].gsub(".") if params[:municipe][:cpf].present?
+    #     cns = params[:municipe][:cns] if params[:municipe][:cns].present?
+    #   end  
+    # end  
+
 end
