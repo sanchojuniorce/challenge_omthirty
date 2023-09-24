@@ -40,8 +40,9 @@ class MunicipesController < ApplicationController
         if (params.keys.include?("endereco"))
           @endereco.save
         end
-        UserMailer.body_register_municipe(@municipe.email).deliver
-        send_sms(@municipe.phone)
+        @body_email = [@municipe, 'Cadastro']
+        UserMailer.body_register_municipe(@body_email).deliver
+        send_sms(@municipe, 'o', 'o cadastro')
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio registrado com sucesso." }
         format.json { render :show, status: :created, location: @municipe }
       else
@@ -68,8 +69,9 @@ class MunicipesController < ApplicationController
             notice = 'Endereço salvo com sucesso.'
           end
         end
-        UserMailer.body_register_municipe(@municipe.email).deliver
-        send_sms(@municipe.phone)
+        @body_email = [@municipe, 'Atualização']
+        UserMailer.body_register_municipe(@body_email).deliver
+        send_sms(@municipe, 'a', 'a atualização')
         format.html { redirect_to municipe_url(@municipe), notice: "Municipio atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @municipe }
       else
@@ -107,11 +109,18 @@ class MunicipesController < ApplicationController
       )
     end  
 
-    def send_sms(phone)
+    def send_sms(municipe, context, origin)
       sms_authenticate.sms.send(
         from: "Municipes System",
-        to: phone,
-        text: 'Municipes System - Messagem SMS Free Developer '
+        to: municipe.telefone, #'5585988761897',
+        text: body_sms(municipe, context, origin)
       )
+    end  
+
+    def body_sms(municipe, context, origin)
+      msg = ""
+      msg << "Foi realizad#{context} #{origin} do Municipe #{municipe.nome} com os seguinte dados: "
+      msg << "CPF: #{municipe.cpf}, CNS: #{municipe.cns}, Telefone: #{municipe.telefone} e Status: #{municipe.status ? "Ativo" : "Inativo"} no dia "
+      msg << "#{municipe.created_at.strftime("%d/%m/%Y")} ás #{municipe.created_at.strftime("%H:%M:%S")}"
     end  
 end
